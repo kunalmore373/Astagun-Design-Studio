@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 import { HiOutlineArrowUpRight } from 'react-icons/hi2';
 import { HiOutlineLightBulb, HiOutlineCheckCircle, HiOutlineSearch } from 'react-icons/hi';
 import { FaCube, FaStar } from 'react-icons/fa';
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import './Home.css';
+import heroBg from "../../assets/images/heropage.png"
+import leftBg from "../../assets/images/left.png"
+import rightBg from "../../assets/images/right.png"
+import ScrollFloat from '../../components/ui/ScrollFloat';
 
 /* ============ DATA ============ */
 const projects = [
@@ -75,6 +80,27 @@ const testimonial = {
 /* ============ COMPONENT ============ */
 export default function Home() {
   const revealRefs = useRef([]);
+  const heroContainerRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: heroContainerRef,
+    offset: ["start start", "end end"]
+  });
+
+  // Animation values mapped to scroll progress
+  // Text + overlay: use state-based hiding (bulletproof)
+  const [heroTextHidden, setHeroTextHidden] = useState(false);
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    setHeroTextHidden(latest > 0.05);
+  });
+
+  // Main hero image: starts with padding (calc) and rounded corners, shrinks to centered rectangle
+  const mainWidth = useTransform(scrollYProgress, [0.1, 0.6], ["calc(100vw - 40px)", "50vw"]);
+  const mainHeight = useTransform(scrollYProgress, [0.1, 0.6], ["calc(100vh - 100px)", "60vh"]);
+  const mainRadius = useTransform(scrollYProgress, [0.1, 0.6], ["24px", "16px"]);
+
+  // Side images slide in naturally via Flexbox as the mainWidth shrinks
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -137,25 +163,56 @@ export default function Home() {
   return (
     <div className="home">
       {/* ===== HERO ===== */}
-      <section className="hero">
-        <div className="hero__bg">
-          <img src="/images/hero-bg.png" alt="Luxury interior" />
-          <div className="hero__overlay" />
-        </div>
-        <div className="hero__content">
-          <h1 className="hero__title">
-            Where Architecture<br />Meets Experience
-          </h1>
-          <div className="hero__right">
-            <p className="hero__desc">
-              Based in Dubai, we design residential and commercial spaces that
-              elevate how people live, work, and interact with their environment
-            </p>
-            <div className="hero__actions">
-              <Link to="/projects" className="btn btn-light">VIEW PROJECTS</Link>
-              <Link to="/contact" className="btn btn-outline">BOOK CONSULTATION</Link>
+      {/* ===== HERO SCROLL CONTAINER ===== */}
+      <section className="hero-scroll-container" ref={heroContainerRef}>
+        <div className="hero-sticky">
+
+          {/* Left Sliding Image */}
+          <motion.div
+            className="hero__side-img hero__side-img--left"
+          >
+            <img src={leftBg} alt="Outdoor terrace" />
+          </motion.div>
+
+          {/* Main Hero Background (shrinks and centers) */}
+          <motion.div
+            className="hero__bg"
+            style={{
+              width: mainWidth,
+              height: mainHeight,
+              borderRadius: mainRadius
+            }}
+          >
+            <img src={heroBg} alt="Luxury interior" />
+            <div className={`hero__overlay ${heroTextHidden ? 'hero__content--hidden' : ''}`} />
+
+            {/* Hero Content (fades out) */}
+            <div className={`hero__content ${heroTextHidden ? 'hero__content--hidden' : ''}`}>
+              <h1 className="hero__title">
+                Where Architecture<br />Meets Experience
+              </h1>
+              <div className="hero__right">
+                <p className="hero__desc">
+                  Based in Pune, we design residential and commercial spaces that
+                  elevate how people live, work, and interact with their environment
+                </p>
+                <div className="hero__actions">
+                  <Link to="/projects" className="btn btn-light">VIEW PROJECTS</Link>
+                  <Link to="/contact" className="btn btn-outline">BOOK CONSULTATION</Link>
+                </div>
+              </div>
             </div>
-          </div>
+            
+            <div className={`hero__line ${heroTextHidden ? 'hero__content--hidden' : ''}`} />
+          </motion.div>
+
+          {/* Right Sliding Image */}
+          <motion.div
+            className="hero__side-img hero__side-img--right"
+          >
+            <img src={rightBg} alt="Classic interior" />
+          </motion.div>
+
         </div>
       </section>
 
@@ -181,7 +238,16 @@ export default function Home() {
             <img src="/images/about-cozy.png" alt="Cozy interior" />
           </div>
           <div className="about__center reveal reveal-delay-1" ref={addRevealRef}>
-            <h2 className="section-title">DESIGNING TIMELESS<br />SPACES WITH PURPOSE</h2>
+            <ScrollFloat
+              containerClassName="section-title"
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+            >
+              DESIGNING TIMELESS SPACES WITH PURPOSE
+            </ScrollFloat>
             <p className="section-subtitle">
               WE OFFER A COMPLETE RANGE OF ARCHITECTURE AND
               INTERIOR DESIGN SERVICES TAILORED TO CREATE SPACES.
@@ -200,7 +266,7 @@ export default function Home() {
             <div className="marquee__group" key={repeat}>
               {marqueeItems.map((item, i) => (
                 <span className="marquee__item" key={`${repeat}-${i}`}>
-                  {item} <span className="marquee__dot">◦</span>
+                  {item} <span className="marquee__dot"></span>
                 </span>
               ))}
             </div>

@@ -42,7 +42,7 @@ export default function Navbar() {
         </div>
 
         <Link to="/" className="navbar__logo">
-          ArcSphere Studio
+          Ashtagun Design Studio
         </Link>
 
         <div className="navbar__right">

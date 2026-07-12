@@ -1,0 +1,16 @@
+/* ===== HYPER TEXT COMPONENT ===== */
+.hyper-text {
+  display: inline-flex;
+  flex-wrap: wrap;
+  cursor: default;
+  overflow: hidden;
+}
+
+.hyper-text__letter {
+  font-family: inherit;
+  display: inline-block;
+}
+
+.hyper-text__space {
+  width: 0.35em;
+}
