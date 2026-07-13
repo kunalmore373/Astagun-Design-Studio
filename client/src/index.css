@@ -25,8 +25,8 @@
   --font-display: 'Playfair Display', Georgia, serif;
 
   /* Spacing */
-  --section-padding: 120px 80px;
-  --section-padding-mobile: 60px 20px;
+  --section-padding: 120px 0;
+  --section-padding-mobile: 60px 0;
   --container-max: 1440px;
 
   /* Border Radius */
@@ -104,25 +104,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
-  font-weight: 800;
+  font-family: var(--font-primary);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: -0.01em;
   color: var(--text-heading);
   text-align: center;
   line-height: 1.15;
 }
 
 .section-subtitle {
-  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  font-family: var(--font-primary);
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  font-weight: 400;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   text-align: center;
   max-width: 600px;
   margin: 16px auto 0;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 /* ===== CONTAINER ===== */
@@ -238,6 +240,8 @@ h1, h2, h3, h4, h5, h6 {
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-6 { transition-delay: 0.6s; }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {

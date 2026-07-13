@@ -21,7 +21,7 @@
 }
 
 .project-detail__content {
-  padding: 60px 40px 120px;
+  padding: 60px 0 120px;
   position: relative;
   z-index: 2;
   margin-top: -100px;

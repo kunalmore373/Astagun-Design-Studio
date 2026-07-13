@@ -6,8 +6,6 @@ import { FaCube, FaStar } from 'react-icons/fa';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import './Home.css';
 import heroBg from "../../assets/images/heropage.png"
-import leftBg from "../../assets/images/left.png"
-import rightBg from "../../assets/images/right.png"
 import ScrollFloat from '../../components/ui/ScrollFloat';
 
 /* ============ DATA ============ */
@@ -39,26 +37,40 @@ const services = [
   {
     title: 'Architectural',
     description: 'Designing modern buildings that combine aesthetics, efficiency, and long-term value.',
+    image: '/images/architecture.avif'
   },
   {
     title: 'Interior Design',
     description: 'Creating refined interiors through thoughtful materials, lighting, and spatial composition.',
+    image: '/images/interiordesign.avif'
   },
   {
     title: 'Renovation & Remodeling',
     description: 'Transforming outdated spaces into modern and carefully designed environments.',
+    image: '/images/renovation_remodeling.avif'
   },
   {
-    title: 'Landscape Architecture',
-    description: 'Designing outdoor environments that harmonize with architecture and nature correctly.',
+    title: '3D Visualization',
+    description: 'High-quality visualizations that help clients clearly understand the design before construction begins.',
+    image: '/images/3d_visualization_new.avif'
+  },
+  {
+    title: 'Space Planning',
+    description: 'Optimizing layouts to improve functionality, circulation, and spatial flow.',
+    image: '/images/spaceplanning.avif'
+  },
+  {
+    title: 'Construction Consultation',
+    description: 'Providing expert guidance and oversight throughout the construction phase to ensure design integrity and quality.',
+    image: '/images/construction_consultation_new.avif'
   },
 ];
 
 const processSteps = [
-  { icon: <HiOutlineSearch size={28} />, title: 'DISCOVERY', description: 'We Begin By Understanding Your Goals, Requirements, And Design Vision.', image: '/images/interior-accent.png' },
-  { icon: <FaCube size={24} />, label: 'IDEATION', title: 'CONCEPT DEVELOPMENT', description: '', image: '/images/about-cozy.png' },
-  { icon: <HiOutlineLightBulb size={28} />, title: 'DESIGN DEVELOPMENT', description: 'Detailed Drawings, Materials, And Spatial Specifications Are Finalized.', image: '/images/about-architect.png' },
-  { icon: <HiOutlineCheckCircle size={28} />, title: 'EXECUTION', description: 'We Guide Implementation To Ensure The Final Result Reflects The Original Design Vision.', image: '/images/project-restaurant.png' },
+  { icon: <HiOutlineSearch size={28} />, title: 'DISCOVERY', description: 'We Begin By Understanding Your Goals, Requirements, And Design Vision.', image: '/images/process_discovery.png' },
+  { icon: <FaCube size={24} />, label: 'IDEATION', title: 'CONCEPT DEVELOPMENT', description: '', image: '/images/process_concept.png' },
+  { icon: <HiOutlineLightBulb size={28} />, title: 'DESIGN DEVELOPMENT', description: 'Detailed Drawings, Materials, And Spatial Specifications Are Finalized.', image: '/images/process_design.png' },
+  { icon: <HiOutlineCheckCircle size={28} />, title: 'EXECUTION', description: 'We Guide Implementation To Ensure The Final Result Reflects The Original Design Vision.', image: '/images/process_execution.png' },
 ];
 
 const marqueeItems = [
@@ -171,7 +183,7 @@ export default function Home() {
           <motion.div
             className="hero__side-img hero__side-img--left"
           >
-            <img src={leftBg} alt="Outdoor terrace" />
+            <img src="/images/hero_left.avif" alt="Modern interior" />
           </motion.div>
 
           {/* Main Hero Background (shrinks and centers) */}
@@ -210,7 +222,7 @@ export default function Home() {
           <motion.div
             className="hero__side-img hero__side-img--right"
           >
-            <img src={rightBg} alt="Classic interior" />
+            <img src="/images/hero_right.avif" alt="Classic interior" />
           </motion.div>
 
         </div>
@@ -235,7 +247,7 @@ export default function Home() {
       <section className="about" id="about">
         <div className="about__inner container">
           <div className="about__left reveal" ref={addRevealRef}>
-            <img src="/images/about-cozy.png" alt="Cozy interior" />
+            <img src="/images/about_left.avif" alt="Cozy interior" />
           </div>
           <div className="about__center reveal reveal-delay-1" ref={addRevealRef}>
             <ScrollFloat
@@ -254,7 +266,7 @@ export default function Home() {
             </p>
           </div>
           <div className="about__right reveal reveal-delay-2" ref={addRevealRef}>
-            <img src="/images/about-architect.png" alt="Architect at work" />
+            <img src="/images/about_right.avif" alt="Architect at work" />
           </div>
         </div>
       </section>
@@ -332,6 +344,9 @@ export default function Home() {
                 key={service.title}
                 ref={addRevealRef}
               >
+                <div className="services__item-hover-img">
+                  <img src={service.image} alt={service.title} />
+                </div>
                 <div className="services__item-content">
                   <h3 className="services__item-title">{service.title}</h3>
                   <p className="services__item-desc">{service.description}</p>
@@ -384,9 +399,9 @@ export default function Home() {
       <section className="process" id="process">
         <div className="container">
           <div className="reveal" ref={addRevealRef}>
-            <h2 className="section-title">OUR DESIGN PROCESS</h2>
+            <h2 className="section-title">CLEAR DESIGN PROCESS</h2>
             <p className="section-subtitle">
-              A STRUCTURED APPROACH TO BRINGING YOUR VISION TO LIFE.
+              A COLLABORATIVE APPROACH FROM CONCEPT TO COMPLETION.
             </p>
           </div>
 
@@ -399,8 +414,8 @@ export default function Home() {
               >
                 <img src={step.image} alt={step.title} className="process__card-bg" />
                 <div className="process__card-overlay" />
+                <div className="process__card-icon">{step.icon}</div>
                 <div className="process__card-content">
-                  <div className="process__card-icon">{step.icon}</div>
                   {step.label && <span className="process__card-label">{step.label}</span>}
                   <h3 className="process__card-title">{step.title}</h3>
                   {step.description && (
