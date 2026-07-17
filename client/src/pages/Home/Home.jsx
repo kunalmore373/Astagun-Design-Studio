@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { HiOutlineArrowUpRight } from 'react-icons/hi2';
 import { HiOutlineLightBulb, HiOutlineCheckCircle, HiOutlineSearch, HiOutlineCube } from 'react-icons/hi';
 import { FaCube, FaStar } from 'react-icons/fa';
-import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import './Home.css';
 import heroBg from "../../assets/images/heropage.png"
 import ScrollFloat from '../../components/ui/ScrollFloat';
@@ -80,19 +80,50 @@ const marqueeItems = [
   '12+ YEARS EXPERIENCE',
 ];
 
-const testimonial = {
-  stars: 5,
-  title: 'A Game-Changing Experience for My Growth',
-  text: 'Working with Claryo brought clarity to decisions I had been postponing for months. The structure, insight, and accountability helped me move forward with confidence and measurable progress.',
-  name: 'Michael Turner',
-  role: 'Founder & Business Consultant',
-  image: '/images/office-interior.jpeg',
-};
+const testimonials = [
+  {
+    stars: 5,
+    title: 'A Game-Changing Experience for My Growth',
+    text: 'Working with Claryo brought clarity to decisions I had been postponing for months. The structure, insight, and accountability helped me move forward with confidence and measurable progress.',
+    name: 'Michael Turner',
+    role: 'Founder & Business Consultant',
+    image: 'https://framerusercontent.com/images/4QlpZiXimbb7JDI7ANpAM5YpmKQ.jpg?width=1091&height=1500',
+    avatar: 'https://randomuser.me/api/portraits/men/32.jpg'
+  },
+  {
+    stars: 5,
+    title: 'Exceptional Attention to Detail',
+    text: 'The team transformed our vision into a stunning reality. Every aspect of the design was thoughtfully considered and flawlessly executed.',
+    name: 'Sarah Jenkins',
+    role: 'Creative Director',
+    image: 'https://framerusercontent.com/images/uCxt73fPvlnB5kTHTnBcmT5QU.jpg?width=1200&height=1697',
+    avatar: 'https://randomuser.me/api/portraits/women/44.jpg'
+  },
+  {
+    stars: 5,
+    title: 'Professional and Innovative Approach',
+    text: 'Their innovative approach to space planning and aesthetics truly sets them apart. We couldn’t be happier with our new commercial space.',
+    name: 'Robert Fox',
+    role: 'CEO, TechFlow',
+    image: 'https://framerusercontent.com/images/Tiy88ptZ4kvNSlnLyVldp6Utxw.jpg?width=960&height=1200',
+    avatar: 'https://randomuser.me/api/portraits/men/65.jpg'
+  },
+  {
+    stars: 5,
+    title: 'Outstanding Quality and Service',
+    text: 'From the initial concept to the final execution, the process was seamless and the results exceeded all our expectations.',
+    name: 'James Wilson',
+    role: 'Property Developer',
+    image: 'https://framerusercontent.com/images/n4fA1Gh2IeJfQ9h8PxBtVUt4LI.jpg?width=1080&height=1620',
+    avatar: 'https://randomuser.me/api/portraits/men/85.jpg'
+  }
+];
 
 /* ============ COMPONENT ============ */
 export default function Home() {
   const revealRefs = useRef([]);
   const heroContainerRef = useRef(null);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: heroContainerRef,
@@ -504,33 +535,41 @@ export default function Home() {
 
           <div className="testimonials__content reveal" ref={addRevealRef}>
             <div className="testimonials__image">
-              <img src={testimonial.image} alt="Client testimonial" />
+              <AnimatePresence mode="wait">
+                <motion.img 
+                  key={activeTestimonial}
+                  src={testimonials[activeTestimonial].image} 
+                  alt="Client testimonial" 
+                  initial={{ y: 40, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -40, opacity: 0 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                />
+              </AnimatePresence>
             </div>
             <div className="testimonials__text">
               <div className="testimonials__stars">
-                {[...Array(testimonial.stars)].map((_, i) => (
+                {[...Array(testimonials[activeTestimonial].stars)].map((_, i) => (
                   <FaStar key={i} className="testimonials__star" />
                 ))}
               </div>
-              <h3 className="testimonials__title">{testimonial.title}</h3>
-              <p className="testimonials__body">{testimonial.text}</p>
+              <h3 className="testimonials__title">{testimonials[activeTestimonial].title}</h3>
+              <p className="testimonials__body">{testimonials[activeTestimonial].text}</p>
               <div className="testimonials__author">
-                <p className="testimonials__name">{testimonial.name}</p>
-                <p className="testimonials__role">{testimonial.role}</p>
+                <p className="testimonials__name">{testimonials[activeTestimonial].name}</p>
+                <p className="testimonials__role">{testimonials[activeTestimonial].role}</p>
               </div>
               <div className="testimonials__avatars">
-                <div className="testimonials__avatar active">
-                  <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael" />
-                </div>
-                <div className="testimonials__avatar">
-                  <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah" />
-                </div>
-                <div className="testimonials__avatar">
-                  <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Robert" />
-                </div>
-                <div className="testimonials__avatar">
-                  <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="James" />
-                </div>
+                {testimonials.map((testi, i) => (
+                  <div 
+                    key={i} 
+                    className={`testimonials__avatar ${i === activeTestimonial ? 'active' : ''}`}
+                    onClick={() => setActiveTestimonial(i)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <img src={testi.avatar} alt={testi.name} />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -539,18 +578,28 @@ export default function Home() {
 
       {/* ===== QUOTE CTA ===== */}
       <section className="quote-cta reveal" ref={addRevealRef}>
-        <div className="quote-cta__bg">
-          <img src="/images/project-serenity-villa.png" alt="Architecture landscape" />
-          <div className="quote-cta__overlay" />
-        </div>
-        <div className="quote-cta__content container">
-          <blockquote className="quote-cta__text">
-            "Architecture should speak of its time and place, but yearn for timelessness."
-          </blockquote>
-          <p className="quote-cta__author">— Frank Gehry</p>
-          <div className="quote-cta__actions">
-            <Link to="/projects" className="btn btn-light">VIEW PROJECTS</Link>
-            <Link to="/contact" className="btn btn-outline">BOOK CONSULTATION</Link>
+        <div className="container">
+          <div className="quote-cta__inner">
+            <div className="quote-cta__bg">
+              <img src="/images/project-serenity-villa.png" alt="Architecture landscape" />
+              <div className="quote-cta__overlay" />
+            </div>
+            
+            <div className="quote-cta__content">
+              <div className="quote-cta__top-left">
+                <blockquote className="quote-cta__text">
+                  "ARCHITECTURE SHOULD SPEAK OF ITS TIME AND PLACE, BUT YEARN FOR TIMELESSNESS."
+                </blockquote>
+                <p className="quote-cta__author">FRANK GEHRY</p>
+              </div>
+              
+              <div className="quote-cta__bottom-right">
+                <div className="quote-cta__actions">
+                  <Link to="/projects" className="btn btn-glass">VIEW PROJECTS</Link>
+                  <Link to="/contact" className="btn btn-light">BOOK CONSULTATION</Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -39,16 +39,42 @@ export default function Footer() {
 
         <div className="footer__bottom">
           <div className="footer__contact-icons">
-            <a href="mailto:hello@arcsphere.studio" aria-label="Email"><HiOutlineMail size={20} /></a>
+            <a href="mailto:hello@arcsphere.studio" aria-label="Email">
+              <HiOutlineMail size={20} />
+              <span className="footer__icon-text">hello@arcsphere.studio</span>
+            </a>
             <span className="footer__icon-sep">|</span>
-            <a href="tel:+1234567890" aria-label="Phone"><HiOutlinePhone size={20} /></a>
+            <a href="tel:+971559876543" aria-label="Phone">
+              <HiOutlinePhone size={20} />
+              <span className="footer__icon-text">+971 55 987 6543</span>
+            </a>
             <span className="footer__icon-sep">|</span>
-            <a href="#" aria-label="Location"><HiOutlineLocationMarker size={20} /></a>
+            <a href="#" aria-label="Location">
+              <HiOutlineLocationMarker size={20} />
+              <span className="footer__icon-text">Dubai, UAE</span>
+            </a>
           </div>
           <p className="footer__copyright">
             © 2026 Your Architecture Studio. All Rights Reserved.
           </p>
         </div>
+      </div>
+
+      {/* Marquee Text */}
+      <div className="footer__marquee">
+        <div className="footer__marquee-content">
+          <span>Ashtagun Design Studio </span>
+          <span>Ashtagun Design Studio </span>
+        </div>
+        <div className="footer__marquee-content" aria-hidden="true">
+          <span>Ashtagun Design Studio </span>
+          <span>Ashtagun Design Studio </span>
+        </div>
+      </div>
+
+      {/* Footer Image */}
+      <div className="footer__image">
+        <img src="https://framerusercontent.com/images/3GG8FlJkc5UJfOGjTcx5PwNKKs.jpg?width=1728&height=624" alt="Architecture landscape" />
       </div>
     </footer>
   );
