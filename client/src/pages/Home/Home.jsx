@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HiOutlineArrowUpRight } from 'react-icons/hi2';
-import { HiOutlineLightBulb, HiOutlineCheckCircle, HiOutlineSearch } from 'react-icons/hi';
+import { HiOutlineLightBulb, HiOutlineCheckCircle, HiOutlineSearch, HiOutlineCube } from 'react-icons/hi';
 import { FaCube, FaStar } from 'react-icons/fa';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import './Home.css';
@@ -67,10 +67,10 @@ const services = [
 ];
 
 const processSteps = [
-  { icon: <HiOutlineSearch size={28} />, title: 'DISCOVERY', description: 'We Begin By Understanding Your Goals, Requirements, And Design Vision.', image: '/images/process_discovery.png' },
-  { icon: <FaCube size={24} />, label: 'IDEATION', title: 'CONCEPT DEVELOPMENT', description: '', image: '/images/process_concept.png' },
-  { icon: <HiOutlineLightBulb size={28} />, title: 'DESIGN DEVELOPMENT', description: 'Detailed Drawings, Materials, And Spatial Specifications Are Finalized.', image: '/images/process_design.png' },
-  { icon: <HiOutlineCheckCircle size={28} />, title: 'EXECUTION', description: 'We Guide Implementation To Ensure The Final Result Reflects The Original Design Vision.', image: '/images/process_execution.png' },
+  { icon: <HiOutlineSearch size={32} />, title: 'DISCOVERY', description: 'We Begin By Understanding Your Goals, Requirements, And Design Vision.', image: '/images/process_discovery.png', topText: 'RESEARCH' },
+  { icon: <HiOutlineCube size={32} />, title: 'CONCEPT DEVELOPMENT', description: 'Our Team Develops Layouts, Ideas, And Creative Design Directions.', image: '/images/process_concept.png', topText: 'IDEATION' },
+  { icon: <HiOutlineLightBulb size={32} />, title: 'DESIGN DEVELOPMENT', description: 'Detailed Drawings, Materials, And Spatial Specifications Are Finalized.', image: '/images/process_design.png', topText: 'PLANNING' },
+  { icon: <HiOutlineCheckCircle size={32} />, title: 'EXECUTION', description: 'We Guide Implementation To Ensure The Final Result Reflects The Original Design Vision.', image: '/images/process_execution.png', topText: 'IMPLEMENTATION' },
 ];
 
 const marqueeItems = [
@@ -110,6 +110,7 @@ export default function Home() {
   const mainWidth = useTransform(scrollYProgress, [0.1, 0.6], ["calc(100vw - 40px)", "50vw"]);
   const mainHeight = useTransform(scrollYProgress, [0.1, 0.6], ["calc(100vh - 100px)", "60vh"]);
   const mainRadius = useTransform(scrollYProgress, [0.1, 0.6], ["24px", "16px"]);
+  const mainBlur = useTransform(scrollYProgress, [0.1, 0.6], ["blur(0px)", "blur(8px)"]);
 
   // Side images slide in naturally via Flexbox as the mainWidth shrinks
 
@@ -195,7 +196,7 @@ export default function Home() {
               borderRadius: mainRadius
             }}
           >
-            <img src={heroBg} alt="Luxury interior" />
+            <motion.img src={heroBg} alt="Luxury interior" style={{ filter: mainBlur }} />
             <div className={`hero__overlay ${heroTextHidden ? 'hero__content--hidden' : ''}`} />
 
             {/* Hero Content (fades out) */}
@@ -214,7 +215,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            
+
             <div className={`hero__line ${heroTextHidden ? 'hero__content--hidden' : ''}`} />
           </motion.div>
 
@@ -290,7 +291,16 @@ export default function Home() {
       <section className="featured" id="projects">
         <div className="container">
           <div className="reveal" ref={addRevealRef}>
-            <h2 className="section-title">FEATURED PROJECTS</h2>
+            <ScrollFloat
+              containerClassName="section-title"
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+            >
+              FEATURED PROJECTS
+            </ScrollFloat>
             <p className="section-subtitle">
               A SELECTION OF OUR RECENT ARCHITECTURE AND<br />INTERIOR DESIGN WORK.
             </p>
@@ -331,10 +341,26 @@ export default function Home() {
       <section className="services" id="services">
         <div className="container">
           <div className="reveal" ref={addRevealRef}>
-            <h2 className="section-title">OUR SERVICES</h2>
-            <p className="section-subtitle">
+            <ScrollFloat
+              containerClassName="section-title"
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+            >
+              OUR SERVICES
+            </ScrollFloat>
+            <ScrollFloat
+              containerClassName="section-subtitle"
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+            >
               END-TO-END DESIGN SERVICES FROM<br />CONCEPT TO COMPLETION.
-            </p>
+            </ScrollFloat>
           </div>
 
           <div className="services__list">
@@ -364,10 +390,26 @@ export default function Home() {
       <section className="expertise" id="expertise">
         <div className="container">
           <div className="reveal" ref={addRevealRef}>
-            <h2 className="section-title">PROJECT EXPERTISE</h2>
-            <p className="section-subtitle">
+            <ScrollFloat
+              containerClassName="section-title"
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+            >
+              PROJECT EXPERTISE
+            </ScrollFloat>
+            <ScrollFloat
+              containerClassName="section-subtitle"
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+            >
               WE DESIGN SPACES ACROSS RESIDENTIAL AND<br />COMMERCIAL ENVIRONMENTS.
-            </p>
+            </ScrollFloat>
           </div>
 
           <div className="expertise__grid reveal" ref={addRevealRef}>
@@ -399,10 +441,26 @@ export default function Home() {
       <section className="process" id="process">
         <div className="container">
           <div className="reveal" ref={addRevealRef}>
-            <h2 className="section-title">CLEAR DESIGN PROCESS</h2>
-            <p className="section-subtitle">
+            <ScrollFloat
+              containerClassName="section-title"
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+            >
+              CLEAR DESIGN PROCESS
+            </ScrollFloat>
+            <ScrollFloat
+              containerClassName="section-subtitle"
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+            >
               A COLLABORATIVE APPROACH FROM CONCEPT TO COMPLETION.
-            </p>
+            </ScrollFloat>
           </div>
 
           <div className="process__grid">
@@ -414,13 +472,19 @@ export default function Home() {
               >
                 <img src={step.image} alt={step.title} className="process__card-bg" />
                 <div className="process__card-overlay" />
+                
+                {/* Initial state visual elements */}
+                <div className="process__card-grid" />
+                <div className="process__card-circle" />
+                <span className="process__card-number">0{i + 1}</span>
+                <span className="process__card-toptext">{step.topText}</span>
+
                 <div className="process__card-icon">{step.icon}</div>
                 <div className="process__card-content">
-                  {step.label && <span className="process__card-label">{step.label}</span>}
                   <h3 className="process__card-title">{step.title}</h3>
-                  {step.description && (
+                  <div className="process__card-desc-wrapper">
                     <p className="process__card-desc">{step.description}</p>
-                  )}
+                  </div>
                 </div>
               </div>
             ))}
